@@ -9,9 +9,19 @@ handlers:
   static_dir: css
 - url: /libs
   static_dir: libs
+<<<<<<< HEAD
 env_variables:
   CLOUDSQL_HOST: mysql:unix_socket=/cloudsql/cloud-project-siit:asia-southeast1:siit-cloud
   CLOUDSQL_USER: "root"
   CLOUDSQL_DB: "inventary"
   CLOUDSQL_PASSWORD: " " 
   CLOUDSQL_DNS: "/cloudsql/cloud-project-siit:asia-southeast1:siit-cloud"
+=======
+
+  env_variables:
+    CLOUDSQL_HOST: mysql:unix_socket=/cloudsql/cloud-project-siit:asia-southeast1:siit-cloud
+    CLOUDSQL_USER: "root"
+    CLOUDSQL_DB: "inventary"
+    CLOUDSQL_PASSWORD: " " 
+    CLOUDSQL_DNS: "/cloudsql/cloud-project-siit:asia-southeast1:siit-cloud"
+>>>>>>> 2befc472d123da09301b5eea37a36f9082b5041f
