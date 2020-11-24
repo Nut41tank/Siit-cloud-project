@@ -1,6 +1,9 @@
 runtime: php55
 api_version: 1
 
+runtime_config:
+    document_root: .
+
 handlers:
 - url: /
   script: index.php
@@ -8,16 +11,24 @@ handlers:
 - url: /index\.html
   script: index.php
 
-- url: /stylesheets
-  static_dir: stylesheets
+- url: /scss
+  static_dir: scss
 
-- url: /(.*\.(gif|png|jpg))$
-  static_files: static/\1
-  upload: static/.*\.(gif|png|jpg)$
+- url: /css
+  static_dir: css
 
-- url: /admin/.*
-  script: admin.php
-  login: admin
+- url: /libs
+  static_dir: libs
+  
+
+
 
 - url: /.*
   script: not_found.php
+
+  env_variables:
+    CLOUDSQL_HOST: mysql:unix_socket=/cloudsql/cloud-project-siit:asia-southeast1:siit-cloud
+    CLOUDSQL_USER: "root"
+    CLOUDSQL_DB: "inventary"
+    CLOUDSQL_PASSWORD: " " 
+    CLOUDSQL_DNS: "/cloudsql/cloud-project-siit:asia-southeast1:siit-cloud"

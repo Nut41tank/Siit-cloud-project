@@ -1,7 +1,9 @@
 <?php
-define('DB_SERVER','34.87.190.187');
-define('DB_USERNAME','root');
-define('DB_PASSWORD','');
-define('DB_DATABASE','inventary');
-$db = mysqli_connect(DB_SERVER,DB_USERNAME,DB_PASSWORD,DB_DATABASE);
+
+$host = getenv('CLOUDSQL_HOST');
+$user = getenv('CLOUDSQL_USER');
+$DB = getenv('CLOUDSQL_DB');
+$password = getenv('CLOUDSQL_PASSWORD');
+$DNS = getenv('CLOUDSQL_DNS');
+$db = mysqli_connect(null,$user,$password,$DB,null,$DNS);
 ?>
