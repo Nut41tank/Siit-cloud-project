@@ -9,14 +9,18 @@ handlers:
   static_dir: css
 - url: /libs
   static_dir: libs
- - url: /
+-url: /
   script: index.php
+- url: /index.php
+  script: index.php
+- url: /logout
+  script: logout.php
 - url: /login.php
   script: login.php
 - url: /carts.php
   script: carts.php
-- url: /table.php
-  script: table.php
+- url: /tables.php
+  script: tables.php
 env_variables:
   CLOUDSQL_USER: "root"
   CLOUDSQL_DB: "inventary"
