@@ -27,6 +27,10 @@ handlers:
   script: carts.php
 - url: /tables.php
   script: tables.php
+- url: /generate_pdf.php
+  script: generate_pdf.php
+- url: /reorder.php
+  script: reorder.php
 env_variables:
   CLOUDSQL_USER: "root"
   CLOUDSQL_DB: "inventary"
