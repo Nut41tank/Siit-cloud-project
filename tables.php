@@ -220,6 +220,7 @@
                                     <tbody>
                                         <tr>
                                             <?php
+                                            include("config.php");
                                              $sql = "SELECT * FROM product ";
                                              $result = mysqli_query($db,$sql);
                                              if ($result->num_rows>0){
