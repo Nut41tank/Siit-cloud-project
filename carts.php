@@ -356,10 +356,6 @@ if($_POST['cartname']){
                     " <button class='delete-item' data-name='" +
                     cartArray[i].name + "'>X</button></td></tr>";
             }
-        
-            
-            cartArray[0].name
-            
             function click()
             {
                 $.ajax({
@@ -374,7 +370,8 @@ if($_POST['cartname']){
                  alert('something went wrong, rating failed');
                 }
                 });
-                } 
+            } 
+            
             $("#show-cart").html(output);
             $("#count-cart").html(shoppingCart.countCart());
             $("#total-cart").html(shoppingCart.totalCart());
