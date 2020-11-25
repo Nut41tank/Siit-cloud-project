@@ -1,4 +1,12 @@
-<?php include("session.php") ?>
+<?php include("session.php"); 
+
+
+if($_POST['cartname']){
+
+    $mysql = "UPDATE product SET amount = amount -".$_POST['cartcount']."WHERE 'p_name' = '.$_POST['cartname'].'"; 
+    $result = mysqli_query($db,$sql);
+    }
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -244,7 +252,7 @@
   
                                             ?>
                                 </div>
-                                <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                                <button class="btn btn-secondary" type="submit" onclick="click()" data-dismiss="modal">Submit</button>
                             </div>
 
                         </div>
@@ -289,7 +297,7 @@
                     </div>
                     <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
                     <div class="modal-footer">
-                        <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                        <button class="btn btn-secondary"  type="button" data-dismiss="modal">Cancel</button>
                         <a class="btn btn-primary"  href="logout.php">Logout</a>
                     </div>
                 </div>
@@ -340,7 +348,6 @@
                     " <td><input class='item-count' type='number' data-name='amount" +
                     cartArray[i].name +
                     "' value='" + cartArray[i].count + "' </td><td></td>"
-
                     +
                     " <td><button class='plus-item' data-name='" +
                     cartArray[i].name + "'>+</button>" +
@@ -349,8 +356,25 @@
                     " <button class='delete-item' data-name='" +
                     cartArray[i].name + "'>X</button></td></tr>";
             }
-
-
+        
+            
+            cartArray[0].name
+            
+            function click()
+            {
+                $.ajax({
+                url: 'carts.php',
+                type: 'post',
+                data: {cartname: cartArray[0].name,cartcount:cartArray[0].count},
+                success: function(output) 
+                {
+                    alert('success, server says '+output);
+                }, error: function()
+                {
+                 alert('something went wrong, rating failed');
+                }
+                });
+                } 
             $("#show-cart").html(output);
             $("#count-cart").html(shoppingCart.countCart());
             $("#total-cart").html(shoppingCart.totalCart());
