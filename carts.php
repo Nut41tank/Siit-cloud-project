@@ -1,11 +1,11 @@
 <?php include("session.php"); 
 
 
-if($_POST['cartname']){
+//if($_POST['cartname']){
 
-    $mysql = "UPDATE product SET amount = amount -".$_POST['cartcount']."WHERE 'p_name' = '".$_POST['cartname']."'"; 
-    $result = mysqli_query($db,$sql);
-    }
+  //  $mysql = "UPDATE product SET amount = amount -".$_POST['cartcount']."WHERE 'p_name' = '".$_POST['cartname']."'"; 
+   // $result = mysqli_query($db,$sql);
+    //}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -252,7 +252,7 @@ if($_POST['cartname']){
   
                                             ?>
                                 </div>
-                                <button class="btn btn-secondary" type="submit" onClick="click()" data-dismiss="modal">Submit</button>
+                                <button class="btn btn-secondary" id="sendPHP" type="submit" data-dismiss="modal">Submit</button>
                             </div>
 
                         </div>
@@ -362,21 +362,22 @@ if($_POST['cartname']){
             $("#count-cart").html(shoppingCart.countCart());
             $("#total-cart").html(shoppingCart.totalCart());
         }
-        function click()
-            {
-                $.ajax({
-                url: 'carts.php',
-                type: 'post',
-                data: {cartname: cartArray[0].name,cartcount:cartArray[0].count},
-                success: function(output) 
-                {
-                    alert('success, server says '+output);
-                }, error: function()
-                {
-                 alert('something went wrong, rating failed');
-                }
-                });
-            } 
+       // $('#sendPHP').click(function(){
+        //    {
+         //       $.ajax({
+         //       url: 'carts.php',
+          //      type: 'post',
+           //     data: {cartname: cartArray[0].name,cartcount:cartArray[0].count},
+           //     success: function(output) 
+           //     {
+           //         alert('success, server says '+output);
+           //     }, error: function()
+           //     {
+           //      alert('something went wrong, rating failed');
+           //     }
+           //     });
+          //  } 
+     //   }
 
         $("#show-cart").on("click", ".delete-item", function(event) {
             var name = $(this).attr("data-name");
