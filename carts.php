@@ -3,7 +3,7 @@
 
 if($_POST['cartname']){
 
-    $mysql = "UPDATE product SET amount = amount -".$_POST['cartcount']."WHERE 'p_name' = '.$_POST['cartname'].'"; 
+    $mysql = "UPDATE product SET amount = amount -".$_POST['cartcount']."WHERE 'p_name' = '".$_POST['cartname']."'"; 
     $result = mysqli_query($db,$sql);
     }
 ?>
@@ -252,7 +252,7 @@ if($_POST['cartname']){
   
                                             ?>
                                 </div>
-                                <button class="btn btn-secondary" type="submit" onclick="click()" data-dismiss="modal">Submit</button>
+                                <button class="btn btn-secondary" type="submit" onClick="click()" data-dismiss="modal">Submit</button>
                             </div>
 
                         </div>
@@ -356,7 +356,13 @@ if($_POST['cartname']){
                     " <button class='delete-item' data-name='" +
                     cartArray[i].name + "'>X</button></td></tr>";
             }
-            function click()
+            
+
+            $("#show-cart").html(output);
+            $("#count-cart").html(shoppingCart.countCart());
+            $("#total-cart").html(shoppingCart.totalCart());
+        }
+        function click()
             {
                 $.ajax({
                 url: 'carts.php',
@@ -371,11 +377,6 @@ if($_POST['cartname']){
                 }
                 });
             } 
-            
-            $("#show-cart").html(output);
-            $("#count-cart").html(shoppingCart.countCart());
-            $("#total-cart").html(shoppingCart.totalCart());
-        }
 
         $("#show-cart").on("click", ".delete-item", function(event) {
             var name = $(this).attr("data-name");
