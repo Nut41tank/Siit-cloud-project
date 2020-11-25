@@ -19,7 +19,9 @@ handlers:
   script: index.php
 - url: /index.php
   script: index.php
-- url: /logout
+- url: /(*)/logout
+  script: logout.php
+- url: /index.php/logout.php
   script: logout.php
 - url: /login.php
   script: login.php
