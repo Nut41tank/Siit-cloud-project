@@ -10,7 +10,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>SIIT Inventory Management System - Carts</title>
+    <title>SIIT Inventory Management System - Reorder list </title>
 
     <!-- Custom fonts for this template -->
     <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -63,7 +63,7 @@
             <li class="nav-item">
                 <a class="nav-link" href="carts.php">
                     <i class="fas fa-fw fa-cog"></i>
-                    <span>Carts</span></a>
+                    <span>Checkout</span></a>
             </li>
             <?php 
             if ($_SESSION['role']=='admin'){
@@ -200,79 +200,87 @@
                     <p class="mb-4">Select Product from Add Product Button.</p>
 
                     <!-- DataTales Example -->
+
                     <div class="card shadow mb-4">
                         <div class="card-header py-3">
                             <h6 class="m-0 font-weight-bold text-primary">Reorder list</h6>
                         </div>
-                        <div class="card-body">
-                            <div class="table-responsive">
-                                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                                    <thead>
-                                        <tr>
-                                            <th>ID</th>
-                                            <th>Product Name</th>
-                                            <th>Amount</th>
-                                            <th>Compus</th>
-                                            <th>Date</th>
-                                            <th>Action</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <?php
+                        <from action="muliorder.php" methond="post">
+                            <div class="card-body">
+                                <div class="table-responsive">
+                                    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                        <thead>
+                                            <tr>
+                                                <th></th>
+                                                <th>ID</th>
+                                                <th>Product Name</th>
+                                                <th>Amount</th>
+                                                <th>Compus</th>
+                                                <th>Date</th>
+                                                <th>Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <?php
                                              $sql = "SELECT * FROM reorder ";
                                              $result = mysqli_query($db,$sql);
                                              if ($result->num_rows>0){
                                                  while($row = $result->fetch_array()){
                                             ?>
-                                            <td><?php echo $row['RID'];?></td>
-                                            <td><?php echo $row['product'];?></td>
-                                            <td><?php echo $row['amount'];?></td>
-                                            <td><?php echo $row['campus'];?></td>
-                                            <td><?php echo $row['date'];?></td>
-                                            <td>
+                                                <td><input type="checkbox" name="check[]"
+                                                        value="<?php echo $row['RID'];?>"></td>
+                                                <td><?php echo $row['RID'];?></td>
+                                                <td><?php echo $row['product'];?></td>
+                                                <td><?php echo $row['amount'];?></td>
+                                                <td><?php echo $row['campus'];?></td>
+                                                <td><?php echo $row['date'];?></td>
+                                                <td>
                                                     <div
                                                         class="d-sm-flex align-items-center justify-content-between mb-4">
-                                                        <a href="#" class="btn btn-success btn-circle"><i
+                                                        <a href="order.php?id=<?= $row['RID']?>"
+                                                            class="btn btn-success btn-circle"><i
                                                                 class="fas fa-check"></i></a>
                                                         <a href="reorder_del.php?id=<?= $row['RID'] ?>"
                                                             class="btn btn-danger btn-circle"><i
                                                                 class="fas fa-trash"></i></a>
                                                     </div>
-                                            </td>
-                                            <?php
+                                                </td>
+                                                <?php
                                                  }
                                              }
                                             
                                             ?>
 
-                                        </tr>
+                                            </tr>
 
 
-                                    </tbody>
-                                </table>
+                                        </tbody>
+                                    </table>
 
 
-                            </div>
-                            <!-- /.container-fluid -->
-
-                        </div>
-                        <!-- End of Main Content -->
-
-                        <!-- Footer -->
-                        <footer class="sticky-footer bg-white">
-                            <div class="container my-auto">
-                                <div class="copyright text-center my-auto">
-                                    <span>Copyright &copy; Your Website 2020</span>
                                 </div>
+                                <!-- /.container-fluid -->
+
                             </div>
-                        </footer>
-                        <!-- End of Footer -->
+                            </form>
+                            <!-- End of Main Content -->
+
+                            <!-- Footer -->
+                            <footer class="sticky-footer bg-white">
+                                <div class="container my-auto">
+                                    <div class="copyright text-center my-auto">
+                                        <span>Copyright &copy; Your Website 2020</span>
+                                    </div>
+                                </div>
+                            </footer>
+                            <!-- End of Footer -->
 
                     </div>
                     <!-- End of Content Wrapper -->
 
                 </div>
+
                 <!-- End of Page Wrapper -->
 
                 <!-- Scroll to Top Button-->

@@ -3,7 +3,7 @@
 <html lang="en">
 
 <head>
-
+    <script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -63,7 +63,7 @@
             <li class="nav-item">
                 <a class="nav-link" href="carts.php">
                     <i class="fas fa-fw fa-cog"></i>
-                    <span>Carts</span></a>
+                    <span>Checkout</span></a>
             </li>
             <?php 
             if ($_SESSION['role']=='admin'){
@@ -179,7 +179,8 @@
                                     Activity Log
                                 </a>
                                 <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="logout.php" data-toggle="modal" data-target="#logoutModal">
+                                <a class="dropdown-item" href="logout.php" data-toggle="modal"
+                                    data-target="#logoutModal">
                                     <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
                                     Logout
                                 </a>
@@ -195,7 +196,7 @@
                 <div class="container-fluid">
 
                     <!-- Page Heading -->
-                    <h1 class="h3 mb-2 text-gray-800">Carts</h1>
+                    <h1 class="h3 mb-2 text-gray-800">Checkout</h1>
                     <p class="mb-4">Select Product from Add Product Button.</p>
 
                     <!-- DataTales Example -->
@@ -216,28 +217,36 @@
                                             <th>
                                         </tr>
                                     </thead>
-                                    <tbody>
-                                        <tr>
-                                        </tr>
-
+                                    <tbody id="show-cart">
 
                                     </tbody>
                                 </table>
                             </div>
                             <div class="my-2"></div>
                             <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                                <button class="btn btn-success dropdown-toggle " type="button"
-                                    id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true"
-                                    aria-expanded="false">
+                                <button class="btn btn-success dropdown-toggle " type="button" id="dropdownMenuButton"
+                                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                     Add Products
                                 </button>
-                                <div class="dropdown-menu animated--fade-in"
-                                    aria-labelledby="dropdownMenuButton">
-                                    <a class="dropdown-item" href="#">Action</a>
-                                    <a class="dropdown-item" href="#">Another action</a>
-                                    <a class="dropdown-item" href="#">Something else here</a>
-                                 </div>
+                                <div class="dropdown-menu animated--fade-in" aria-labelledby="dropdownMenuButton">
+                                    <?php
+                                             $sql = "SELECT p_name FROM product ";
+                                             $result = mysqli_query($db,$sql);
+                                             if ($result->num_rows>0){
+                                                 while($row = $result->fetch_array()){
+                                            ?>
+                                    <a class="dropdown-item" href="#"
+                                        data-name="<?php echo $row['p_name']; ?>"><?php echo $row['p_name']; ?></a>
+
+                                    <?php
+                                                 }
+                                             }
+  
+                                            ?>
+                                </div>
+                                <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
                             </div>
+
                         </div>
 
                     </div>
@@ -281,7 +290,7 @@
                     <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
                     <div class="modal-footer">
                         <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                        <a class="btn btn-primary" href="logout.php">Logout</a>
+                        <a class="btn btn-primary"  href="logout.php">Logout</a>
                     </div>
                 </div>
             </div>
@@ -303,6 +312,78 @@
 
         <!-- Page level custom scripts -->
         <script src="js/demo/datatables-demo.js"></script>
+        <script src="js/shoppingCart.js"></script>
+
+        <script>
+        $(".dropdown-item").click(function(event) {
+            event.preventDefault();
+            var name = $(this).attr("data-name");
+            var price = Number($(this).attr("data-price"));
+
+            shoppingCart.addItemToCart(name, price, 1);
+            displayCart();
+        });
+
+        $("#clear-cart").click(function(event) {
+            shoppingCart.clearCart();
+            displayCart();
+        });
+
+        function displayCart() {
+            var cartArray = shoppingCart.listCart();
+            console.log(cartArray);
+            var output = "";
+
+            for (var i in cartArray) {
+                output += "<tr><td></td><td>" +
+                    cartArray[i].name + "</td>" +
+                    " <td><input class='item-count' type='number' data-name='amount" +
+                    cartArray[i].name +
+                    "' value='" + cartArray[i].count + "' </td><td></td>"
+
+                    +
+                    " <td><button class='plus-item' data-name='" +
+                    cartArray[i].name + "'>+</button>" +
+                    " <button class='subtract-item' data-name='" +
+                    cartArray[i].name + "'>-</button>" +
+                    " <button class='delete-item' data-name='" +
+                    cartArray[i].name + "'>X</button></td></tr>";
+            }
+
+
+            $("#show-cart").html(output);
+            $("#count-cart").html(shoppingCart.countCart());
+            $("#total-cart").html(shoppingCart.totalCart());
+        }
+
+        $("#show-cart").on("click", ".delete-item", function(event) {
+            var name = $(this).attr("data-name");
+            shoppingCart.removeItemFromCartAll(name);
+            displayCart();
+        });
+
+        $("#show-cart").on("click", ".subtract-item", function(event) {
+            var name = $(this).attr("data-name");
+            shoppingCart.removeItemFromCart(name);
+            displayCart();
+        });
+
+        $("#show-cart").on("click", ".plus-item", function(event) {
+            var name = $(this).attr("data-name");
+            shoppingCart.addItemToCart(name, 0, 1);
+            displayCart();
+        });
+
+        $("#show-cart").on("change", ".item-count", function(event) {
+            var name = $(this).attr("data-name");
+            var count = Number($(this).val());
+            shoppingCart.setCountForItem(name, count);
+            displayCart();
+        });
+
+
+        displayCart();
+        </script>
 
 </body>
 

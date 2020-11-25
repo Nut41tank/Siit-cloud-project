@@ -8,9 +8,7 @@
         $sql = "SELECT * FROM user WHERE uname = '$uname' and pword = '$pword'";
         $result = mysqli_query($db,$sql);
         $row = mysqli_fetch_array($result,MYSQLI_ASSOC);
-        
         $count = mysqli_num_rows($result);
-          
         if($count == 1) {
            $_SESSION['fname'] = $row['f_name'];
            $_SESSION['role'] = $row['role'];

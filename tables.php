@@ -63,7 +63,7 @@
             <li class="nav-item">
                 <a class="nav-link" href="carts.php">
                     <i class="fas fa-fw fa-cog"></i>
-                    <span>Carts</span></a>
+                    <span>Checkout</span></a>
             </li>
             <?php 
             if ($_SESSION['role']=='admin'){
@@ -218,25 +218,25 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr>
-                                            <?php
-                                            include("config.php");
+                                        <?php
                                              $sql = "SELECT * FROM product ";
                                              $result = mysqli_query($db,$sql);
                                              if ($result->num_rows>0){
                                                  while($row = $result->fetch_array()){
                                             ?>
+                                        <tr>
+
                                             <td><?php echo $row['PID'];?></td>
                                             <td><?php echo $row['p_name'];?></td>
                                             <td><?php echo $row['amount'];?></td>
                                             <td><?php echo $row['campus'];?></td>
-                                            <?php
+
+                                        </tr>
+                                        <?php
                                                  }
                                              }
                                             
                                             ?>
-                                        </tr>
-
 
                                     </tbody>
                                 </table>
